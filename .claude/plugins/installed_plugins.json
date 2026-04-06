@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "plugins": {
+    "superpowers@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoda/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7",
+        "version": "5.0.7",
+        "installedAt": "2026-03-18T14:43:16.294Z",
+        "lastUpdated": "2026-03-31T19:55:55.451Z",
+        "gitCommitSha": "7e516434f2a30114300efc9247db32fb37daa5f9"
+      }
+    ],
+    "claude-mem@thedotmack": [
+      {
+        "scope": "project",
+        "projectPath": "/Users/yoda/forProgramming/Mistral",
+        "installPath": "/Users/yoda/.claude/plugins/cache/thedotmack/claude-mem/10.5.2",
+        "version": "10.5.2",
+        "installedAt": "2026-02-28T13:01:16.792Z",
+        "lastUpdated": "2026-02-28T13:01:16.792Z",
+        "gitCommitSha": "ecb09df42002db222a57e117abcec188393ef984"
+      }
+    ],
+    "skill-creator@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoda/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-18T14:37:57.824Z",
+        "lastUpdated": "2026-03-25T09:10:26.044Z",
+        "gitCommitSha": "6b70f99f769f58b9b642dc8a271936b17862cf8c"
+      }
+    ],
+    "github@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoda/.claude/plugins/cache/claude-plugins-official/github/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-18T14:41:37.266Z",
+        "lastUpdated": "2026-03-25T09:10:26.038Z",
+        "gitCommitSha": "6b70f99f769f58b9b642dc8a271936b17862cf8c"
+      }
+    ],
+    "frontend-design@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/yoda/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
+        "version": "unknown",
+        "installedAt": "2026-03-18T14:41:56.008Z",
+        "lastUpdated": "2026-03-25T09:10:26.041Z",
+        "gitCommitSha": "6b70f99f769f58b9b642dc8a271936b17862cf8c"
+      }
+    ]
+  }
+}
