@@ -1,0 +1,69 @@
+name: Weekly Claude Code Harness Update
+
+on:
+  schedule:
+    - cron: '0 19 * * 0'  # 毎週月曜 04:00 JST (= 日曜 19:00 UTC)
+  workflow_dispatch:       # 手動テスト用
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  harness-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit and improve Claude Code harness config
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_args: "--allowedTools Bash,Read,Glob,Grep,Edit,Write,WebSearch,WebFetch"
+          prompt: |
+            You are a Claude Code harness improvement agent.
+
+            TODAY=$(date +%Y-%m-%d)
+            BRANCH=feature/harness-update-$TODAY
+
+            Steps:
+            1. Read all files under .claude/:
+               - settings.json (permissions, hooks, model, statusLine)
+               - CLAUDE.md (global instructions)
+               - rules/*.md (behavioral rules)
+               - agents/*.md (subagent definitions)
+               - hooks/*.sh (safety hooks)
+
+            2. Use WebSearch and WebFetch to research:
+               - Claude Code best practices on docs.anthropic.com
+               - Recent Claude Code changelog and new features
+               - Community harness configuration patterns on GitHub
+
+            3. Identify concrete improvements with evidence from official docs.
+               Only suggest well-reasoned changes backed by documentation.
+               Do not change things for their own sake.
+
+            4. If improvements found:
+               a. git checkout -b $BRANCH
+               b. Edit the relevant files
+               c. git config user.email "github-actions[bot]@users.noreply.github.com"
+               d. git config user.name "github-actions[bot]"
+               e. git add each changed file and commit with a descriptive message
+               f. git push origin $BRANCH
+               g. gh pr create \
+                    --title "chore: weekly harness update $TODAY" \
+                    --body "## Automated Claude Code Harness Update
+
+            Improvements based on official docs and best practices.
+
+            ### Changes
+            (Claude will fill this in with specific changes and rationale)" \
+                    --base main \
+                    --head $BRANCH
+
+            5. If no improvements needed:
+               Output a summary of what was reviewed and why no changes were made.
+               Do not create a PR.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
