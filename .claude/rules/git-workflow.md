@@ -1,10 +1,7 @@
-# Git Workflow — GitHub Flow
+# Git Workflow — Claude Code Execution Details
 
-## ブランチ戦略
-
-- `main` は常にデプロイ可能。直接コミット・プッシュ禁止。
-- 全作業はブランチ経由: `feature/xxx`、`fix/xxx`、`hotfix/xxx`
-- hotfix のみ緊急時に main から直接分岐を許可（それでも PR 必須）
+Base GitHub Flow rules (branching, PR requirements, main protection) live in the
+global `AGENTS.md`. This file adds the Claude Code-specific execution flow.
 
 ## 開発開始時（REQUIRED）
 
@@ -19,11 +16,5 @@
 `superpowers:finishing-a-development-branch` スキルを使って統合方法を決定する。
 - テストが全パスしていることを確認
 - 標準パスは **Option 2: Push and create a Pull Request**
-- PR URL をユーザーに共有し、マージ承認を待つ
-- ユーザーが承認したら `gh pr merge` を実行
-
-## PR ルール
-
-- `gh pr create` で作成し URL をユーザーに共有する
-- ユーザーの明示的な承認なしに `gh pr merge` を実行しない
-- テスト失敗中は PR を作成しない
+- `gh pr create` で作成し、PR URL をユーザーに共有してマージ承認を待つ
+- ユーザーが明示的に承認した場合のみ `gh pr merge` を実行
