@@ -52,7 +52,16 @@
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(~/.claude/.credentials.json)",
-      "Read(~/.codex/auth.json)"
+      "Read(~/.codex/auth.json)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Edit(./secrets/**)",
+      "Edit(./**/*.pem)",
+      "Edit(./**/*.key)",
+      "Edit(~/.ssh/**)",
+      "Edit(~/.aws/**)",
+      "Edit(~/.claude/.credentials.json)",
+      "Edit(~/.codex/auth.json)"
     ],
     "defaultMode": "plan",
     "disableBypassPermissionsMode": "disable"

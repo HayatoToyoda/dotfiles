@@ -1,0 +1,56 @@
+name: Validate Harness
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Shell syntax check
+        run: |
+          set -e
+          for f in .claude/hooks/*.sh install.sh tests/*.sh .claude/statusline-wrapper.sh; do
+            bash -n "$f"
+            echo "syntax OK: $f"
+          done
+
+      - name: settings.json is valid JSON
+        run: jq empty .claude/settings.json
+
+      - name: Symlinks resolve inside the repo
+        run: |
+          set -e
+          find . -path ./.git -prune -o -type l -print | while read -r link; do
+            target=$(readlink -f "$link" || true)
+            if [ -z "$target" ] || [ ! -e "$target" ]; then
+              echo "broken symlink: $link"
+              exit 1
+            fi
+            case "$target" in
+              "$PWD"/*) echo "symlink OK: $link -> $target" ;;
+              *) echo "symlink escapes repo: $link -> $target"; exit 1 ;;
+            esac
+          done
+
+      - name: Safety-hook decision matrix
+        run: bash tests/test-hooks.sh
+
+      - name: Instruction files stay within the size budget
+        run: |
+          set -e
+          for f in shared/AGENTS.md .claude/CLAUDE.md; do
+            lines=$(wc -l < "$f")
+            echo "$f: $lines lines"
+            if [ "$lines" -gt 200 ]; then
+              echo "::error::$f exceeds the 200-line budget ($lines lines)"
+              exit 1
+            fi
+          done
