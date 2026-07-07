@@ -1,0 +1,18 @@
+# Codex CLI global configuration (~/.codex/config.toml)
+# Global instructions live in ~/.codex/AGENTS.md -> dotfiles/shared/AGENTS.md
+# Reference: https://developers.openai.com/codex/config-reference
+
+# Balanced default: writes stay inside the workspace, escalations ask first.
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+# Skills are shared with Claude Code via the ~/.agents/skills symlink
+# (install.sh links it to dotfiles/.claude/skills; Codex follows symlinks).
+# Disable an individual shared skill here if it misbehaves in Codex:
+# [[skills.config]]
+# path = "~/.agents/skills/<name>/SKILL.md"
+# enabled = false
+
+# Uncomment to pin a model instead of the workspace default:
+# model = "gpt-5.5"
+# model_reasoning_effort = "medium"
