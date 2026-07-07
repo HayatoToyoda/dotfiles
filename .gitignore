@@ -1,4 +1,10 @@
 .DS_Store
+
+# Claude Code runtime state — must never be committed.
+# (install.sh uses per-item symlinks, so these normally stay in the real
+# ~/.claude; entries kept as a safety net.)
+.claude/.credentials.json
+.claude/settings.local.json
 .claude/history.jsonl
 .claude/stats-cache.json
 .claude/session-env/
@@ -12,8 +18,7 @@
 .claude/tasks/
 .claude/plans/
 .claude/downloads/
-.claude/plugins/cache/
-.claude/plugins/marketplaces/
+.claude/plugins/
 .claude/ide/
 .claude/projects/
 .claude/cache/

@@ -9,6 +9,10 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: harness-update
+  cancel-in-progress: false
+
 jobs:
   harness-update:
     runs-on: ubuntu-latest
@@ -28,17 +32,17 @@ jobs:
             BRANCH=feature/harness-update-$TODAY
 
             Steps:
-            1. Read all files under .claude/:
-               - settings.json (permissions, hooks, model, statusLine)
-               - CLAUDE.md (global instructions)
-               - rules/*.md (behavioral rules)
-               - agents/*.md (subagent definitions)
-               - hooks/*.sh (safety hooks)
+            1. Read the whole harness tree:
+               - shared/AGENTS.md (canonical cross-tool instructions)
+               - .claude/ (CLAUDE.md, settings.json, rules/, agents/, hooks/, skills/*/SKILL.md)
+               - codex/config.toml and cursor/user-rules.md
+               - install.sh and README.md (symlink wiring)
 
             2. Use WebSearch and WebFetch to research:
-               - Claude Code best practices on docs.anthropic.com
-               - Recent Claude Code changelog and new features
-               - Community harness configuration patterns on GitHub
+               - Claude Code docs/changelog (code.claude.com/docs)
+               - Codex docs (developers.openai.com/codex): AGENTS.md, config.toml, skills
+               - Cursor docs (cursor.com/docs): rules, AGENTS.md, skills
+               - Keep the three tools consistent with the symlink design in README.md
 
             3. Identify concrete improvements with evidence from official docs.
                Only suggest well-reasoned changes backed by documentation.

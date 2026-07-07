@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "gcpAuthRefresh": "gcloud auth application-default print-access-token > /dev/null 2>&1 || gcloud auth application-default login",
   "permissions": {
     "allow": [
@@ -36,14 +37,22 @@
       "Bash(npx eslint:*)",
       "Bash(npx jest:*)",
       "Bash(npx jest --runInBand)",
-      "Bash(claude:*)"
+      "Bash(claude:*)",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:developers.openai.com)",
+      "WebFetch(domain:cursor.com)"
     ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(./secrets/**)",
-      "Read(./*.pem)",
-      "Read(./*.key)"
+      "Read(./**/*.pem)",
+      "Read(./**/*.key)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.codex/auth.json)"
     ],
     "defaultMode": "plan",
     "disableBypassPermissionsMode": "disable"
@@ -56,12 +65,7 @@
           {
             "type": "command",
             "command": "$HOME/.claude/hooks/block-dangerous-bash.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
+          },
           {
             "type": "command",
             "command": "$HOME/.claude/hooks/check-main-push.sh"
