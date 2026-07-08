@@ -88,4 +88,21 @@ log "Cursor:"
 link_item "$DOTFILES_DIR/.claude/skills" "$HOME/.cursor/skills"
 log "  note:   paste shared/AGENTS.md into Cursor Settings > Rules (one-time)"
 
+# ---------------------------------------------------------------------------
+# 4. MCP servers (user scope) — keep this set deliberately small: each server
+#    costs tool-schema tokens in every session. context7 kills hallucinated
+#    library APIs with only two tools. Heavier servers (AWS, Playwright)
+#    belong in per-project scope, not here.
+# ---------------------------------------------------------------------------
+if command -v claude > /dev/null 2>&1; then
+  log "MCP:"
+  if claude mcp get context7 > /dev/null 2>&1; then
+    log "  context7: already registered"
+  elif claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp > /dev/null 2>&1; then
+    log "  context7: registered (user scope)"
+  else
+    log "  context7: registration failed — run manually: claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp"
+  fi
+fi
+
 log "done."
