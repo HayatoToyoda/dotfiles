@@ -9,6 +9,8 @@ Everything below applies to Claude Code only.
 
 - Use `/clear` or a fresh session when switching to an unrelated task.
 - Delegate bounded research, review, and verification to the `investigator`, `reviewer`, and `verifier` subagents to keep the main context clean.
+- After implementing and verifying a change, run the `code-simplifier` subagent before opening a PR.
+- Inner-loop workflows are explicit slash commands: `/commit-push-pr` to ship a finished change, `/verify-and-ship` for the full verify → simplify → PR loop.
 - Keep final responses concise, with concrete file paths and next actions when useful.
 
 ## Configuration Scope

@@ -1,7 +1,7 @@
 ---
 name: verifier
 description: Use this agent when work may be complete and you need evidence. Run the smallest relevant verification commands, inspect diffs when needed, and report commands, exit codes, failures, and blockers without overstating success.
-model: inherit
+model: sonnet
 color: green
 tools: Read, Grep, Glob, Bash
 ---
