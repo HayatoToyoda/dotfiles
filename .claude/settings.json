@@ -1,6 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "gcpAuthRefresh": "gcloud auth application-default print-access-token > /dev/null 2>&1 || gcloud auth application-default login",
+  "env": {
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_ERROR_REPORTING": "1"
+  },
   "permissions": {
     "allow": [
       "WebSearch",
@@ -88,7 +92,22 @@
         "hooks": [
           {
             "type": "command",
+            "command": "$HOME/.claude/hooks/format-file.sh"
+          },
+          {
+            "type": "command",
             "command": "$HOME/.claude/hooks/remind-after-edit.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/session-start-context.sh"
           }
         ]
       }
