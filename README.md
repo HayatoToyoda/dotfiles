@@ -33,12 +33,13 @@ bash install.sh
 |---|---|---|
 | `shared/AGENTS.md` | 共通 instructions（通信・安全・検証・Git flow） | 全ツール |
 | `.claude/CLAUDE.md` | `@AGENTS.md` + Claude 固有の薄いレイヤー | Claude Code |
-| `.claude/rules/` | 常時ロードされるルール（`paths:` frontmatter で範囲指定可） | Claude Code |
-| `.claude/hooks/` | PreToolUse 強制ガード（rm -rf / main 直 push ブロック） | Claude Code |
-| `.claude/agents/` | investigator / reviewer / verifier サブエージェント | Claude Code / Cursor |
-| `.claude/skills/` | Agent Skills（オープン標準） | Claude Code / Codex / Cursor |
+| `.claude/rules/` | path-scoped ルール（`paths:` frontmatter で該当ファイルを触った時だけ注入） | Claude Code |
+| `.claude/hooks/` | PreToolUse 強制ガード + PostToolUse 自動フォーマット + SessionStart コンテキスト注入 | Claude Code |
+| `.claude/agents/` | investigator(haiku) / reviewer(sonnet) / verifier(sonnet) / code-simplifier(sonnet) | Claude Code / Cursor |
+| `.claude/skills/` | Agent Skills（オープン標準）。`/commit-push-pr` `/verify-and-ship` は明示呼び出し専用 | Claude Code / Codex / Cursor |
 | `codex/config.toml` | Codex グローバル設定 | Codex |
 | `cursor/user-rules.md` | Cursor 側セットアップ手順 | （人間用ドキュメント） |
+| `tests/test-hooks.sh` | 安全フックの攻撃/正常系マトリクス（CI でも実行） | （開発用） |
 
 ## 設計原則
 
@@ -48,6 +49,13 @@ bash install.sh
   各プロジェクトの `AGENTS.md` / `CLAUDE.md` / `.claude/settings.json` に置く。
 - プロジェクト側は `AGENTS.md` を root に置き、`CLAUDE.md` には `@AGENTS.md` と書く
   （Codex / Cursor は AGENTS.md を直接読む）。
+- **常時ロードされる指示は最小限に**。CLAUDE.md は User Message として注入されるため
+  セッションが伸びるほど影響が減衰する。繰り返し強制したいルールは `paths:` 付きの
+  `.claude/rules/` へ、機械的に強制できるものは hook / linter へ降ろす。
+- **エージェントに自分の作業を検証する手段を与える**（テスト・ビルド・ブラウザ）。
+  失敗から得た修正は再プロンプトでなく rules / skills の Gotchas に書き残す。
+- MCP サーバーはグローバルには最小限（context7 のみ）。各サーバーはツールスキーマ分の
+  トークンを毎セッション消費するため、AWS / Playwright 等はプロジェクトスコープに置く。
 
 ## Maintenance
 
