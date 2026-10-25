@@ -67,17 +67,34 @@
     "disableBypassPermissionsMode": "disable"
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/session-start-context.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
         "hooks": [
           {
             "type": "command",
-            "command": "$HOME/.claude/hooks/block-dangerous-bash.sh"
+            "command": "$HOME/.claude/hooks/block-dangerous-bash.sh",
+            "onFailure": "block",
+            "timeout": 10,
+            "statusMessage": "Checking command safety..."
           },
           {
             "type": "command",
-            "command": "$HOME/.claude/hooks/check-main-push.sh"
+            "command": "$HOME/.claude/hooks/check-main-push.sh",
+            "onFailure": "block",
+            "timeout": 10,
+            "statusMessage": "Checking branch protection..."
           }
         ]
       }
