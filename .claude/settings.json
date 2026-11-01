@@ -40,6 +40,7 @@
       "Bash(claude:*)",
       "WebFetch(domain:code.claude.com)",
       "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:developers.openai.com)",
       "WebFetch(domain:cursor.com)"
     ],
