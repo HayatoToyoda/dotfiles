@@ -68,6 +68,14 @@ fi
 
 # ---- モデル別トークン単価 ($IN/$OUT per 1M tokens) ----
 case "$MODEL_ID" in
+  *"opus-5"*)
+    PRICE_IN=4; PRICE_OUT=20 ;;
+  *"sonnet-5"*)
+    PRICE_IN=2; PRICE_OUT=10 ;;
+  *"haiku-5"*)
+    PRICE_IN="0.10"; PRICE_OUT="0.50" ;;
+  *"fable-5"*)
+    PRICE_IN=10; PRICE_OUT=50 ;;
   *"opus-4"*|*"opus-4-6"*)
     PRICE_IN=15; PRICE_OUT=75 ;;
   *"sonnet-4"*|*"sonnet-4-6"*)
