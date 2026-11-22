@@ -92,8 +92,22 @@
           }
         ]
       }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v notify-send >/dev/null 2>&1 && notify-send 'Claude Code' 'Needs your approval' || true"
+          }
+        ]
+      }
     ]
   },
+  "autoContinueAtUsageLimit": true,
+  "autoCompactEnabled": true,
+  "cleanupPeriodDays": 30,
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-wrapper.sh",
